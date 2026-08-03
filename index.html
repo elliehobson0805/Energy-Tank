@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calorie Bank</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        input, button {
+            padding: 10px;
+            margin: 8px;
+            font-size: 16px;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .bar {
+            height: 25px;
+            background: #ddd;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: green;
+            width: 0%;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Calorie Bank</h1>
+
+<div class="card">
+
+<h3>Daily calorie goal</h3>
+
+<input id="dailyCalories" type="number" placeholder="Example: 2000">
+
+<br>
+
+<button onclick="startBank()">Start</button>
+
+</div>
+
+
+<div class="card">
+
+<h2>Calories banked</h2>
+
+<h1 id="bank">0</h1>
+
+<h3>Calories used</h3>
+
+<input id="usedCalories" type="number" placeholder="Calories eaten">
+
+<button onclick="useCalories()">Log</button>
+
+
+<h3>Remaining</h3>
+
+<h2 id="remaining">0</h2>
+
+
+<div class="bar">
+    <div class="progress" id="progress"></div>
+</div>
+
+</div>
+
+
+<script>
+
+let dailyCalories = 0;
+let usedCalories = 0;
+
+
+function startBank() {
+
+    dailyCalories = Number(
+        document.getElementById("dailyCalories").value
+    );
+
+}
+
+
+function caloriesPerMinute() {
+
+    return dailyCalories / 720;
+
+}
+
+
+function bankedCalories() {
+
+    let now = new Date();
+
+    let start = new Date();
+
+    start.setHours(9,0,0,0);
+
+
+    let minutes = (now - start) / 60000;
+
+
+    if(minutes < 0){
+        minutes = 0;
+    }
+
+
+    if(minutes > 720){
+        minutes = 720;
+    }
+
+
+    return Math.floor(minutes * caloriesPerMinute());
+
+}
+
+
+function useCalories(){
+
+    let amount = Number(
+        document.getElementById("usedCalories").value
+    );
+
+
+    usedCalories += amount;
+
+}
+
+
+function update(){
+
+    let bank = bankedCalories();
+
+    document.getElementById("bank").innerHTML = bank;
+
+
+    let remaining = bank - usedCalories;
+
+    document.getElementById("remaining").innerHTML = remaining;
+
+
+    let percent = (usedCalories / dailyCalories) * 100;
+
+    document.getElementById("progress").style.width = percent + "%";
+
+}
+
+
+setInterval(update,1000);
+
+</script>
+
+</body>
+</html>
