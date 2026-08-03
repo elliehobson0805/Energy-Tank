@@ -43,6 +43,13 @@
 button:hover {
     background: #444444;
 }
+
+   .input-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
         
        .card {
     background: #2b2b2b;
@@ -93,11 +100,10 @@ button:hover {
 
 <h3>Daily Calories</h3>
 
-<input id="dailyCalories" type="number" placeholder="Example: 2000">
-
-<br>
-
-<button onclick="startBank()">Go</button>
+<div class="input-row">
+    <input id="dailyCalories" type="number" placeholder="Example: 2000">
+    <button onclick="startBank()">Go</button>
+</div>
 
 </div>
 
