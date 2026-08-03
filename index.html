@@ -174,9 +174,20 @@ function update(){
     document.getElementById("remaining").innerHTML = remaining;
 
 
-    let percent = (usedCalories / dailyCalories) * 100;
+    let usedPercent = (usedCalories / dailyCalories) * 100;
 
-    document.getElementById("progress").style.width = percent + "%";
+let availablePercent = ((bank - usedCalories) / dailyCalories) * 100;
+
+if (usedPercent < 0) usedPercent = 0;
+if (usedPercent > 100) usedPercent = 100;
+
+if (availablePercent < 0) availablePercent = 0;
+if (availablePercent > (100 - usedPercent)) {
+    availablePercent = 100 - usedPercent;
+}
+
+document.getElementById("usedBar").style.width = usedPercent + "%";
+document.getElementById("availableBar").style.width = availablePercent + "%";
 
 }
 
